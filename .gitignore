@@ -2,6 +2,9 @@
 #Something that Mac's have
 .DS_Store
 
+#Data files
+*.csv
+
 # Compiled class file
 *.class
 
