@@ -14,15 +14,15 @@ public class User implements Comparable<User> {
 	}
 	
 	public String getUsername() {
-		return username;
+		return this.username;
 	}
 	
 	public Integer[] getAnimeList() {
-		return animeList;
+		return this.animeList;
 	}
 	
 	public double getScores(int key) {
-		return scores[key];            //needs modification
+		return this.scores[key];            //needs modification
 	}
 	
 	public int compareTo(User that) {

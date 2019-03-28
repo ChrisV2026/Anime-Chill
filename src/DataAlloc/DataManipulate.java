@@ -11,8 +11,34 @@ public class DataManipulate {
 		String eps = "100";
 		String score = "10";
 		String field = "username";
+		//System.out.println(retrieve_data("Chris", "animeID"));
 		add_data(user, ID, eps, score);
-		show_data(field);
+		//show_data(field);
+	}
+	
+	public static String retrieve_data(String username, String field) {
+		DB_Connection obj_DB_Connection = new DB_Connection();
+		Connection connection = null;
+		connection = obj_DB_Connection.get_connection();
+		String entry = null;
+		
+		PreparedStatement ps = null;
+		try {
+			String query = "select * from users where username = " + "'" + username + "'";
+			ps = connection.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			
+			rs.next();
+			entry = rs.getString(field);
+			connection.close();
+			return entry;
+
+		}
+		
+		catch(Exception e) {
+			System.out.println(e);
+		}
+		return entry;
 	}
 	
 	public static void show_data(String field) {
@@ -73,7 +99,15 @@ public class DataManipulate {
 		connection = obj_DB_Connection.get_connection();
 		boolean is_used = check_data(username, "username");
 		if (is_used) {
-			System.out.println("Already in database, update entry instead");
+			String ID = retrieve_data(username, "animeID");
+			String eps = retrieve_data(username, "episodes");
+			String sc = retrieve_data(username, "score");
+			
+			if(!(animeID.equals(ID) && episodes.equals(eps) && score.equals(sc))) {
+				update_data(username, "animeID", animeID + " " + ID);
+				update_data(username, "episodes", episodes+ " " + eps);
+				update_data(username, "score", score+ " " + sc);
+			}
 			return;
 		}
 		else {
@@ -103,7 +137,9 @@ public class DataManipulate {
 		if (is_used) {
 			PreparedStatement ps = null;
 			try {
-				String command = "update users set " + field + " = " + newval + "where username = '" + username + "'";
+				String command = "update users set " + field + " = " + "'" + newval + "'"; 
+			    String command2 = " where username = '" + username + "'";
+			    command = command + command2;
 				ps = connection.prepareStatement(command);
 				ps.execute();
 				connection.close();

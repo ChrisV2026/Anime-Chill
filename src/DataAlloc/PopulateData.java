@@ -19,10 +19,12 @@ public class PopulateData {
 	public static void populateUsers() throws IOException{
 		File file = new File("Data/test.csv");
 		BufferedReader buff = new BufferedReader(new FileReader(file));
+		FilterFunction f = new FilterFunction();
 		
 		String line = null;
 		
-		line = buff.readLine();
+		//line = buff.readLine();
+		line = f.filter();
 		String[] store = line.split(",", -1);
 		int count = 0;
 
@@ -43,7 +45,7 @@ public class PopulateData {
 		String currentscore = score;
 		String currentepisodes = episodes;
 
-		while((line = buff.readLine()) != null) {
+		while((line = f.filter()) != null) {
 			store = line.split(",", -1);
 			count = 0;
 			username = strip(store[count++]);
