@@ -78,5 +78,6 @@ public class PopulateData {
 		if (!"username".equals(current))
 			DataManipulate.add_data(current, currentanimeID, currentepisodes, currentscore);
 		DataManipulate.show_data("animeID");
+		buff.close();
 	}
 }
