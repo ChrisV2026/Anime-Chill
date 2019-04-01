@@ -4,8 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Random;
 
 public class PopulateData {
 	public static void main(String[] args) throws IOException{
@@ -25,6 +24,7 @@ public class PopulateData {
 		
 		//line = buff.readLine();
 		line = f.filter();
+		String loc = "";
 		String[] store = line.split(",", -1);
 		int count = 0;
 
@@ -60,6 +60,10 @@ public class PopulateData {
 			lastupdated = strip(store[count++]);
 			tags = strip(store[count++]);
 			
+			Random rand = new Random();
+			int n = rand.nextInt(32);
+			loc += city.values()[n];
+			
 			if (current.equals(username)) {
 				currentanimeID += " " + animeID;
 				currentscore += " " + score;
@@ -67,7 +71,7 @@ public class PopulateData {
 			}
 				
 			else if (!"username".equals(current) && !current.equals(username)) {
-				DataManipulate.add_data(current, currentanimeID, currentepisodes, currentscore);
+				DataManipulate.add_data(current, currentanimeID, currentepisodes, currentscore, loc);
 				currentanimeID = animeID; 
 				currentscore = score;
 				currentepisodes = episodes;
@@ -75,8 +79,11 @@ public class PopulateData {
 			}
 			
 		}
+		Random rand = new Random();
+		int n = rand.nextInt(32);
+		loc += city.values()[n];
 		if (!"username".equals(current))
-			DataManipulate.add_data(current, currentanimeID, currentepisodes, currentscore);
+			DataManipulate.add_data(current, currentanimeID, currentepisodes, currentscore, loc);
 		DataManipulate.show_data("animeID");
 		buff.close();
 	}

@@ -10,14 +10,16 @@ public class User {
 
 	private String[] friends = new String[200]; // Users accepted friends
 	private int count = 0; // Keeps tracks of how many friends are in "friends"
+	private String location;
 
 	private User[] potMat = new User[4]; // Randomly filled potential mates
 
-	public User(String username, Integer[] animeList, int[] eps, double[] scores) {
+	public User(String username, Integer[] animeList, int[] eps, double[] scores, String location) {
 		this.username = username;
 		this.animeList = animeList;
 		this.eps = eps;
 		this.scores = scores;
+		this.location = location;
 	}
 
 	public void fillPotential() {
