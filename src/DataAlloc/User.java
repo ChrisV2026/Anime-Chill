@@ -1,10 +1,12 @@
 package DataAlloc;
 
+import java.util.Scanner;
+
 public class User {
-	private String username; // Username
-	private Integer[] animeList; // List of animes watched by user
-	private int[] eps; // List of episodes watched per anime corresponding to animeList
-	private double[] scores; // List of scores given by user per anime corresponding to animeList
+	private String username; // User name
+	private Integer[] animeList; // List of ANIMES watched by user
+	private int[] eps; // List of episodes watched per ANIME corresponding to animeList
+	private double[] scores; // List of scores given by user per ANIME corresponding to animeList
 
 	private String[] friends = new String[200]; // Users accepted friends
 	private int count = 0; // Keeps tracks of how many friends are in "friends"
@@ -72,7 +74,7 @@ public class User {
 	}
 
 	public double compareUser(User that) {
-//		System.out.println(that.getUser());
+
 		double totalDifference = 0.0;
 		Integer[] thatAnimeList = that.getAnimeList();
 		double[] thatScores = that.getScores();
@@ -89,6 +91,10 @@ public class User {
 	public String getUser() {
 		return this.username;
 	}
+	
+	public String[] getFriends() {
+		return this.friends;
+	}
 
 	public Integer[] getAnimeList() {
 		return this.animeList;
@@ -101,6 +107,27 @@ public class User {
 	public User[] getPotMat() {
 		return this.potMat;
 	}
+	
+	public void swipe() {
+		
+		Scanner input = new Scanner(System.in);
+		
+		for (int i = 0; i < this.potMat.length; i++) {
+			
+			System.out.println("Information: " + potMat[i].getUser());
+			
+			System.out.println("Do you like this person? 1 for Y/2 for N");
+			int number = input.nextInt();
+			
+			if(number == 1) {
+				this.friends[this.count] = this.potMat[i].getUser();
+				this.count++;
+			}
+		}
+		
+		input.close();
+		
+	}
 
 	public static void main(String[] args) {
 
@@ -112,11 +139,13 @@ public class User {
 
 		yo.fillPotential();
 
-		User[] hello = yo.getPotMat();
+		String[] hello = yo.getFriends();
+		
+		yo.swipe();
 
 		for (int i = 0; i < hello.length; i++) {
 			if (hello[i] != null)
-				System.out.println(hello[i].getUser() + yo.compareUser(hello[i]));
+				System.out.println(hello[i]);
 		}
 
 	}
