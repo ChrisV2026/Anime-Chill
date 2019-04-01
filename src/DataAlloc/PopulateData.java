@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Random;
 
+
 public class PopulateData {
 	public static void main(String[] args) throws IOException{
 		populateUsers();
