@@ -24,38 +24,64 @@ public class User {
 
 	public void fillPotential() {
 
-		Integer[] animeList = { 5, 1, 2, 3, 4 };
-		int[] eps = { 1, 2, 4, 3, 2 };
-		double[] scores = { 5.0, 2.0, 3.0, 1.0, 7.0 };
+//		Integer[] animeList = { 5, 1, 2, 3, 4 };
+//		int[] eps = { 1, 2, 4, 3, 2 };
+//		double[] scores = { 5.0, 2.0, 3.0, 1.0, 7.0 };
+//
+//		User akila = new User("akila", animeList, eps, scores, "2");
+//
+//		Integer[] animeList1 = { 5, 1, 2, 4, 5 };
+//		int[] eps1 = { 1, 2, 4, 3, 5 };
+//		double[] scores1 = { 2.0, 6.0, 3.1, 5.0, 1.5 };
+//
+//		User eric = new User("yehhh", animeList1, eps1, "4");
+//
+//		Integer[] insAnimes = { 5, 2, 4, 3, 1 };
+//		int[] insEps = { 12, 234, 97, 82, 72 };
+//		double[] insScores = { 8.3, 9.4, 4.2, 9.5, 3.7 };
+//
+//		User oleg = new User("oleg", insAnimes, insEps, "7");
+//
+//		Integer[] insAnimes1 = { 5, 2, 4, 3, 1 };
+//		int[] insEps1 = { 672, 40, 273, 38, 38 };
+//		double[] insScores1 = { 9.2, 8.5, 3.7, 7.9, 8.2 };
+//
+//		User billy = new User("billy", insAnimes1, insEps1, "10");
+//
+//		this.potMat[0] = billy;
+//		this.potMat[1] = eric;
+//		this.potMat[2] = oleg;
+//		this.potMat[3] = akila;
 
-		User akila = new User("akila", animeList, eps, scores);
-
-		Integer[] animeList1 = { 5, 1, 2, 4, 5 };
-		int[] eps1 = { 1, 2, 4, 3, 5 };
-		double[] scores1 = { 2.0, 6.0, 3.1, 5.0, 1.5 };
-
-		User eric = new User("yehhh", animeList1, eps1, scores1);
-
-		Integer[] insAnimes = { 5, 2, 4, 3, 1 };
-		int[] insEps = { 12, 234, 97, 82, 72 };
-		double[] insScores = { 8.3, 9.4, 4.2, 9.5, 3.7 };
-
-		User oleg = new User("oleg", insAnimes, insEps, insScores);
-
-		Integer[] insAnimes1 = { 5, 2, 4, 3, 1 };
-		int[] insEps1 = { 672, 40, 273, 38, 38 };
-		double[] insScores1 = { 9.2, 8.5, 3.7, 7.9, 8.2 };
-
-		User billy = new User("billy", insAnimes1, insEps1, insScores1);
-
-		this.potMat[0] = billy;
-		this.potMat[1] = eric;
-		this.potMat[2] = oleg;
-		this.potMat[3] = akila;
-
-//		for(int i = 0; i < this.potMat.length; i++) {
-//			this.potMat[i] = ## INSERT RANDOM USER ##;
-//		}
+		for(int i = 0; i < this.potMat.length; i++) {
+			
+			String userNameRet = DataManipulate.random_data();
+			
+			String[] animeListStr = DataManipulate.retrieve_data(userNameRet, "animeID").split(" ");
+			Integer[] animeList = new Integer[animeListStr.length];
+			
+			for (int j = 0; j < animeList.length; j++) {
+				animeList[j] = Integer.parseInt(animeListStr[j]);
+			}
+			
+			String[] epsStr = DataManipulate.retrieve_data(userNameRet, "episodes").split(" ");
+			int[] eps = new int[epsStr.length];
+			
+			for (int j = 0; j < eps.length; j++) {
+				eps[j] = Integer.parseInt(epsStr[j]);
+			}
+			
+			String[] scoresStr = DataManipulate.retrieve_data(userNameRet, "episodes").split(" ");
+			double[] scores = new double[scoresStr.length];
+			
+			for (int j = 0; j < scores.length; j++) {
+				scores[j] = Integer.parseInt(scoresStr[j]);
+			}
+			
+			String location = DataManipulate.retrieve_data(userNameRet, "location");
+			
+			this.potMat[i] = new User(userNameRet, animeList, eps, scores, location);
+		}
 		sort();
 	}
 
@@ -137,7 +163,7 @@ public class User {
 		int[] eps1 = { 4, 2, 7, 5, 6 };
 		double[] scores1 = { 4.0, 2.0, 7.0, 2.0, 3.0 };
 
-		User yo = new User("yo", animeList1, eps1, scores1);
+		User yo = new User("yo", animeList1, eps1, scores1, "12");
 
 		yo.fillPotential();
 
