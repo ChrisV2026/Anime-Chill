@@ -1,5 +1,6 @@
 package DataAlloc;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class User {
@@ -10,11 +11,11 @@ public class User {
 
 	private String[] friends = new String[200]; // Users accepted friends
 	private int count = 0; // Keeps tracks of how many friends are in "friends"
-	private String location;
+	private int location;
 
-	private User[] potMat = new User[4]; // Randomly filled potential mates
+	private User[] potMat = new User[100]; // Randomly filled potential mates
 
-	public User(String username, Integer[] animeList, int[] eps, double[] scores, String location) {
+	public User(String username, Integer[] animeList, int[] eps, double[] scores, int location) {
 		this.username = username;
 		this.animeList = animeList;
 		this.eps = eps;
@@ -22,7 +23,7 @@ public class User {
 		this.location = location;
 	}
 
-	public void fillPotential() {
+	public void fillPotential() throws SQLException {
 
 //		Integer[] animeList = { 5, 1, 2, 3, 4 };
 //		int[] eps = { 1, 2, 4, 3, 2 };
@@ -78,7 +79,7 @@ public class User {
 				scores[j] = Integer.parseInt(scoresStr[j]);
 			}
 			
-			String location = DataManipulate.retrieve_data(userNameRet, "location");
+			int location = Integer.parseInt(DataManipulate.retrieve_data(userNameRet, "location"));
 			
 			this.potMat[i] = new User(userNameRet, animeList, eps, scores, location);
 		}
@@ -157,13 +158,13 @@ public class User {
 		
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 
 		Integer[] animeList1 = { 1, 2, 3, 4, 5 };
 		int[] eps1 = { 4, 2, 7, 5, 6 };
 		double[] scores1 = { 4.0, 2.0, 7.0, 2.0, 3.0 };
 
-		User yo = new User("yo", animeList1, eps1, scores1, "12");
+		User yo = new User("yo", animeList1, eps1, scores1, 12);
 
 		yo.fillPotential();
 

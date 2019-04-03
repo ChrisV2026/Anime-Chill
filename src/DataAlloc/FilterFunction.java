@@ -15,7 +15,7 @@ public class FilterFunction {
 	public FilterFunction()throws IOException{
 		this.count = 0;
 		this.current = "";
-		this.file = new File("Data/test.txt");
+		this.file = new File("Data/UserAnimeList.csv");
 		this.buff = new BufferedReader(new FileReader(this.file));
 	}
 	
@@ -29,6 +29,10 @@ public class FilterFunction {
 		
 		while((line = this.buff.readLine()) != null) {
 			String[] store = line.split(",", -1);
+			
+			if(store.length != 11)
+				continue ;
+			
 			username = PopulateData.strip(store[pos]);
 			
 			if(this.count >= 2) {

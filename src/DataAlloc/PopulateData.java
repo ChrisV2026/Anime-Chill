@@ -4,19 +4,21 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Random;
 
 
 public class PopulateData {
-	public static void main(String[] args) throws IOException{
-		populateUsers();
+	public static void main(String[] args) throws IOException, SQLException{
+		//populateUsers();
+		DataManipulate.show_data("location");
 	}
 	
 	public static String strip(String str) {
 		return str.replaceAll("[^\\p{Print}]", "");
 	}
 	
-	public static void populateUsers() throws IOException{
+	public static void populateUsers() throws IOException, SQLException{
 		File file = new File("Data/test.csv");
 		BufferedReader buff = new BufferedReader(new FileReader(file));
 		FilterFunction f = new FilterFunction();
@@ -25,7 +27,7 @@ public class PopulateData {
 		
 		//line = buff.readLine();
 		line = f.filter();
-		String loc = "";
+	
 		String[] store = line.split(",", -1);
 		int count = 0;
 
@@ -45,8 +47,14 @@ public class PopulateData {
 		String currentanimeID = animeID;
 		String currentscore = score;
 		String currentepisodes = episodes;
-
+		int counter = 0;
+		
 		while((line = f.filter()) != null) {
+			counter++;
+			
+			if (counter >= 5000)
+				break;
+			
 			store = line.split(",", -1);
 			count = 0;
 			username = strip(store[count++]);
@@ -62,8 +70,8 @@ public class PopulateData {
 			tags = strip(store[count++]);
 			
 			Random rand = new Random();
-			int n = rand.nextInt(32);
-			loc += city.values()[n];
+			int loc = rand.nextInt(33);
+			
 			
 			if (current.equals(username)) {
 				currentanimeID += " " + animeID;
@@ -71,7 +79,7 @@ public class PopulateData {
 				currentepisodes += " " + episodes;
 			}
 				
-			else if (!"username".equals(current) && !current.equals(username)) {
+			else if (!current.equals(username)) {
 				DataManipulate.add_data(current, currentanimeID, currentepisodes, currentscore, loc);
 				currentanimeID = animeID; 
 				currentscore = score;
@@ -81,11 +89,10 @@ public class PopulateData {
 			
 		}
 		Random rand = new Random();
-		int n = rand.nextInt(32);
-		loc += city.values()[n];
+		int loc = rand.nextInt(32);
 		if (!"username".equals(current))
 			DataManipulate.add_data(current, currentanimeID, currentepisodes, currentscore, loc);
-		DataManipulate.show_data("animeID");
+		DataManipulate.show_data("username");
 		buff.close();
 	}
 }

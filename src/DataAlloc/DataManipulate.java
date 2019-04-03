@@ -3,22 +3,23 @@ package DataAlloc;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Random;
 
 public class DataManipulate {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		String user = "Chris";
 		String ID = "1";
 		String eps = "100";
 		String score = "10";
 		String field = "username";
-		String location = "Canada";
+		int location = 1;
 		//System.out.println(retrieve_data("Chris", "animeID"));
 		add_data(user, ID, eps, score, location);
 		//show_data(field);
 	}
 	
-	public static String retrieve_data(String username, String field) {
+	public static String retrieve_data(String username, String field) throws SQLException {
 		DB_Connection obj_DB_Connection = new DB_Connection();
 		Connection connection = null;
 		connection = obj_DB_Connection.get_connection();
@@ -38,12 +39,14 @@ public class DataManipulate {
 		}
 		
 		catch(Exception e) {
+			connection.close();
 			System.out.println(e);
 		}
+		connection.close();
 		return entry;
 	}
 	
-	public static String random_data() {
+	public static String random_data() throws SQLException {
 		DB_Connection obj_DB_Connection = new DB_Connection();
 		Connection connection = null;
 		connection = obj_DB_Connection.get_connection();
@@ -69,11 +72,12 @@ public class DataManipulate {
 		
 		catch(Exception e) {
 			System.out.println(e);
+			connection.close();
 			return "";
 		}
 	}
 	
-	public static void show_data(String field) {
+	public static void show_data(String field) throws SQLException {
 		DB_Connection obj_DB_Connection = new DB_Connection();
 		Connection connection = null;
 		connection = obj_DB_Connection.get_connection();
@@ -92,10 +96,11 @@ public class DataManipulate {
 		
 		catch(Exception e) {
 			System.out.println(e);
+			connection.close();
 		}
 	}
 	
-	public static boolean check_data(String name, String field) {
+	public static boolean check_data(String name, String field) throws SQLException {
 		DB_Connection obj_DB_Connection = new DB_Connection();
 		Connection connection = null;
 		connection = obj_DB_Connection.get_connection();
@@ -120,12 +125,13 @@ public class DataManipulate {
 		
 		catch(Exception e) {
 			System.out.println(e);
+			connection.close();
 			return false;
 		}
 	}
 	
 	
-	public static void add_data(String username, String animeID, String episodes, String score, String location) {
+	public static void add_data(String username, String animeID, String episodes, String score, int location) throws SQLException {
 		DB_Connection obj_DB_Connection = new DB_Connection();
 		Connection connection = null;
 		connection = obj_DB_Connection.get_connection();
@@ -142,10 +148,11 @@ public class DataManipulate {
 				update_data(username, "score", score+ " " + sc);
 				update_data(username, "location", location + " " + lc);
 			}
+			connection.close();
 			return;
 		}
 		else {
-			String values = "Values('" + username + "', '" + animeID + "', '" + episodes + "', '" + score + ", " + location + "')";
+			String values = "Values('" + username + "', '" + animeID + "', '" + episodes + "', '" + score + "', '" + location + "')";
 			
 			
 			PreparedStatement ps = null;
@@ -160,10 +167,12 @@ public class DataManipulate {
 			catch(Exception e) {
 				System.out.println(e);
 			}
+			
+			connection.close();
 		}
 	}
 	
-	public static void update_data(String username, String field, String newval) {
+	public static void update_data(String username, String field, String newval) throws SQLException {
 		DB_Connection obj_DB_Connection = new DB_Connection();
 		Connection connection = null;
 		connection = obj_DB_Connection.get_connection();
@@ -181,11 +190,14 @@ public class DataManipulate {
 			
 			catch(Exception e) {
 				System.out.println(e);
+				connection.close();
 			}
+			connection.close();
 		}
 		
 		else
 			System.out.println("Must add user before being able to update it");
+		connection.close();
 	}
 	
 }
